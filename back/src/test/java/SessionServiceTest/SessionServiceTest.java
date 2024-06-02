@@ -110,11 +110,9 @@ class SessionServiceTest {
 
     @Test
     void testParticipate() throws IOException {
-        // Arrange
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
-        // Ensure the path is correct and the file exists
         InputStream inputStreamSession = getClass().getClassLoader().getResourceAsStream("MockSession/MockSession.json");
         assertNotNull(inputStreamSession, "The input stream should not be null. Check the file path.");
         Session session = mapper.readValue(inputStreamSession, new TypeReference<Session>() {});
@@ -129,21 +127,17 @@ class SessionServiceTest {
 
         SessionService sessionService = new SessionService(sessionRepository, userRepository);
 
-        // Act
         sessionService.participate(1L, 1L);
 
-        // Assert
         assertTrue(session.getUsers().contains(user));
         verify(sessionRepository, times(1)).save(session);
     }
 
     @Test
     void testNoLongerParticipate() throws IOException {
-        // Arrange
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
-        // Ensure the path is correct and the file exists
         InputStream inputStreamSession = getClass().getClassLoader().getResourceAsStream("MockSession/MockSession.json");
         assertNotNull(inputStreamSession, "The input stream should not be null. Check the file path.");
         Session session = mapper.readValue(inputStreamSession, new TypeReference<Session>() {});
@@ -160,10 +154,8 @@ class SessionServiceTest {
 
         SessionService sessionService = new SessionService(sessionRepository, null);
 
-        // Act
         sessionService.noLongerParticipate(1L, 1L);
 
-        // Assert
         assertFalse(session.getUsers().contains(user));
         verify(sessionRepository, times(1)).save(session);
     }
