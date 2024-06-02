@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "name": "Yoga",
+  "date": "2024-06-02T12:00:00",
+  "description": "Description de la session",
+  "teacher": {
+    "id": 1,
+    "lastName": "Nom de famille de l'enseignant",
+    "firstName": "Prénom de l'enseignant",
+    "createdAt": "2024-06-02T00:00:00",
+    "updatedAt": "2024-06-02T00:00:00"
+  },
+  "users": [],
+  "createdAt": "2024-06-02T00:00:00",
+  "updatedAt": "2024-06-02T00:00:00"
+}
