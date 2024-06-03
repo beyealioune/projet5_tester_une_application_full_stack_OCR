@@ -1,8 +1,10 @@
-package SessionServiceTest;
+package com.openclassrooms.starterjwt.SessionServiceTest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.openclassrooms.starterjwt.exception.BadRequestException;
+import com.openclassrooms.starterjwt.exception.NotFoundException;
 import com.openclassrooms.starterjwt.models.Session;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.SessionRepository;
@@ -24,6 +26,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SessionServiceTest {
 
+    @Mock
+    private UserRepository userRepository;
     @Mock
     private SessionRepository sessionRepository;
 
@@ -158,5 +162,43 @@ class SessionServiceTest {
 
         assertFalse(session.getUsers().contains(user));
         verify(sessionRepository, times(1)).save(session);
+    }
+
+    @Test
+    void testParticipateSessionNotFound() throws IOException {
+        Long sessionId = 1L;
+        Long userId = 1L;
+
+        when(sessionRepository.findById(sessionId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> sessionService.participate(sessionId, userId));
+    }
+
+    @Test
+    void testParticipateUserNotFound() throws IOException {
+        Long sessionId = 1L;
+        Long userId = 1L;
+
+        Session session = new Session();
+        when(sessionRepository.findById(sessionId)).thenReturn(Optional.of(session));
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> sessionService.participate(sessionId, userId));
+    }
+
+    @Test
+    void testParticipateUserAlreadyParticipating() throws IOException {
+        Long sessionId = 1L;
+        Long userId = 1L;
+
+        Session session = new Session();
+        User user = new User();
+        user.setId(userId);
+        session.setUsers(Collections.singletonList(user));
+
+        when(sessionRepository.findById(sessionId)).thenReturn(Optional.of(session));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        assertThrows(BadRequestException.class, () -> sessionService.participate(sessionId, userId));
     }
 }

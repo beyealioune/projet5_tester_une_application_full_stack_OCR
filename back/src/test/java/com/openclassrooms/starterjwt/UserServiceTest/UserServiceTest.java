@@ -1,4 +1,4 @@
-package UserTest;
+package com.openclassrooms.starterjwt.UserServiceTest;
 
 import static org.mockito.Mockito.*;
 

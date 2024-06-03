@@ -6,6 +6,7 @@ import com.openclassrooms.starterjwt.models.Session;
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.SessionRepository;
 import com.openclassrooms.starterjwt.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class SessionService {
 
     private final UserRepository userRepository;
 
+    @Autowired
     public SessionService(SessionRepository sessionRepository, UserRepository userRepository) {
         this.sessionRepository = sessionRepository;
         this.userRepository = userRepository;
