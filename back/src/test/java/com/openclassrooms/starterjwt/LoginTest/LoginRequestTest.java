@@ -1,4 +1,4 @@
-package LoginTest;
+package com.openclassrooms.starterjwt.LoginTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -21,7 +21,7 @@ import com.openclassrooms.starterjwt.payload.response.JwtResponse;
 import com.openclassrooms.starterjwt.payload.response.MessageResponse;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
-import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import com.openclassrooms.starterjwt.security.jwt.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -32,10 +32,10 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    AuthController(AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder,
-            JwtUtils jwtUtils,
-            UserRepository userRepository) {
+    public AuthController(AuthenticationManager authenticationManager,
+                          PasswordEncoder passwordEncoder,
+                          JwtUtils jwtUtils,
+                          UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.passwordEncoder = passwordEncoder;

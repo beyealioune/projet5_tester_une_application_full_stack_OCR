@@ -1,4 +1,4 @@
-package com.openclassrooms.starterjwt.security;
+package com.openclassrooms.starterjwt.security.jwt.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.openclassrooms.starterjwt.security.jwt.AuthEntryPointJwt;
 import com.openclassrooms.starterjwt.security.jwt.AuthTokenFilter;
-import com.openclassrooms.starterjwt.security.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -53,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  public void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()
       .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

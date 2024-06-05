@@ -1,4 +1,4 @@
-package TeacherServiceTest;
+package com.openclassrooms.starterjwt.TeacherServiceTest;
 
 import static org.mockito.Mockito.*;
 
@@ -55,6 +55,40 @@ public class TeacherServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(1L, result.getId());
+        verify(teacherRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void testFindAllWithEmptyList() {
+        // Arrange
+        List<Teacher> teachers = new ArrayList<>();
+
+        TeacherRepository teacherRepository = mock(TeacherRepository.class);
+        when(teacherRepository.findAll()).thenReturn(teachers);
+
+        TeacherService teacherService = new TeacherService(teacherRepository);
+
+        // Act
+        List<Teacher> result = teacherService.findAll();
+
+        // Assert
+        assertEquals(0, result.size());
+        verify(teacherRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testFindByIdNotFound() {
+        // Arrange
+        TeacherRepository teacherRepository = mock(TeacherRepository.class);
+        when(teacherRepository.findById(1L)).thenReturn(Optional.empty());
+
+        TeacherService teacherService = new TeacherService(teacherRepository);
+
+        // Act
+        Teacher result = teacherService.findById(1L);
+
+        // Assert
+        assertNull(result);
         verify(teacherRepository, times(1)).findById(1L);
     }
 }

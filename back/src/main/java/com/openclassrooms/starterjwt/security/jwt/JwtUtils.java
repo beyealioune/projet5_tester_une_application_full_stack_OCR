@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import com.openclassrooms.starterjwt.security.jwt.services.UserDetailsImpl;
 
 import io.jsonwebtoken.*;
 
@@ -17,10 +17,10 @@ public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
   @Value("${oc.app.jwtSecret}")
-  private String jwtSecret;
+  public String jwtSecret;
 
   @Value("${oc.app.jwtExpirationMs}")
-  private int jwtExpirationMs;
+  public int jwtExpirationMs;
 
   public String generateJwtToken(Authentication authentication) {
 
