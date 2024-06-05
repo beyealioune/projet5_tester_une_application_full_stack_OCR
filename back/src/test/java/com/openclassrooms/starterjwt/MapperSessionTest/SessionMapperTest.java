@@ -49,10 +49,8 @@ public class SessionMapperTest {
         when(userService.findById(2L)).thenReturn(new User());
         when(userService.findById(3L)).thenReturn(new User());
 
-        // Appel de la méthode à tester
         Session session = sessionMapper.toEntity(sessionDto);
 
-        // Assertions
         assertEquals("Test description", session.getDescription());
         // Assurez-vous que les utilisateurs sont correctement mappés
         assertEquals(3, session.getUsers().size());
@@ -60,18 +58,14 @@ public class SessionMapperTest {
 
     @Test
     public void testToDto() {
-        // Créer un objet Session
         Session session = new Session();
         session.setDescription("Test description");
         session.setTeacher(new Teacher());
         session.setUsers(List.of(new User(), new User(), new User()));
 
-        // Appel de la méthode à tester
         SessionDto sessionDto = sessionMapper.toDto(session);
 
-        // Assertions
         assertEquals("Test description", sessionDto.getDescription());
-        // Assurez-vous que les utilisateurs sont correctement mappés
         assertEquals(3, sessionDto.getUsers().size());
     }
 }

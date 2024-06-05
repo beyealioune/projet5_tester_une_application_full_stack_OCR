@@ -9,7 +9,6 @@ public class MessageResponseTest {
 
     @Test
     void testGetMessage() {
-        // Créer une instance de MessageResponse avec un message spécifique
         String expectedMessage = "Test message";
         MessageResponse messageResponse = new MessageResponse(expectedMessage);
 

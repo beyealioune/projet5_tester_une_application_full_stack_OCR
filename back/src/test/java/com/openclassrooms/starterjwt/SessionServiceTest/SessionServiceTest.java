@@ -40,7 +40,6 @@ class SessionServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
-        // Ensure the path is correct and the file exists
         InputStream inputStreamSession = getClass().getClassLoader().getResourceAsStream("MockSession/MockSession.json");
         assertNotNull(inputStreamSession, "The input stream should not be null. Check the file path.");
 
