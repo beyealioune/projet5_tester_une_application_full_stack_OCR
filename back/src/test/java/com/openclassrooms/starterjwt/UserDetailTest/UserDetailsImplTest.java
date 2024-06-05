@@ -1,113 +1,150 @@
 package com.openclassrooms.starterjwt.UserDetailTest;
 
-
-import com.openclassrooms.starterjwt.security.jwt.services.UserDetailsImpl;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.GrantedAuthority;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
-import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.openclassrooms.starterjwt.security.jwt.services.UserDetailsImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.GrantedAuthority;
 
+
+
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class UserDetailsImplTest {
 
+    @InjectMocks
+    private UserDetailsImpl userDetails;
+
+    @BeforeEach
+    void setUp() {
+        userDetails = UserDetailsImpl.builder()
+                .id(1L)
+                .username("testuser")
+                .firstName("John")
+                .lastName("Doe")
+                .admin(false)
+                .password("testPassword")
+                .build();
+    }
+
+
     @Test
+    @Tag("UserDetailsImpl.Construction")
+    void testUserDetailsConstructionAndGetters() {
+        assertEquals(1L, userDetails.getId());
+        assertEquals("testuser", userDetails.getUsername());
+        assertEquals("John", userDetails.getFirstName());
+        assertEquals("Doe", userDetails.getLastName());
+        assertFalse(userDetails.getAdmin());
+        assertEquals("testPassword", userDetails.getPassword());
+    }
+
+    @Test
+    @Tag("UserDetailsImpl.getAuthorities()")
     void testGetAuthorities() {
-        // Arrange
-        UserDetailsImpl userDetails = UserDetailsImpl.builder().build();
-
-        // Act
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-
-        // Assert
         assertNotNull(authorities);
         assertTrue(authorities.isEmpty());
     }
 
     @Test
+    @Tag("UserDetailsImpl.isAccountNonExpired()")
     void testIsAccountNonExpired() {
-        // Arrange
-        UserDetailsImpl userDetails = UserDetailsImpl.builder().build();
-
-        // Act + Assert
         assertTrue(userDetails.isAccountNonExpired());
     }
 
-    @Test
-    void testIsAccountNonLocked() {
-        // Arrange
-        UserDetailsImpl userDetails = UserDetailsImpl.builder().build();
 
-        // Act + Assert
+    @Test
+    @Tag("UserDetailsImpl.isAccountNonLocked()")
+    void testIsAccountNonLocked() {
         assertTrue(userDetails.isAccountNonLocked());
     }
 
-    @Test
-    void testIsCredentialsNonExpired() {
-        // Arrange
-        UserDetailsImpl userDetails = UserDetailsImpl.builder().build();
 
-        // Act + Assert
+    @Test
+    @Tag("UserDetailsImpl.isCredentialsNonExpired()")
+    void testIsCredentialsNonExpired() {
         assertTrue(userDetails.isCredentialsNonExpired());
     }
 
-    @Test
-    void testIsEnabled() {
-        // Arrange
-        UserDetailsImpl userDetails = UserDetailsImpl.builder().build();
 
-        // Act + Assert
+    @Test
+    @Tag("UserDetailsImpl.isEnabled()")
+    void testIsEnabled() {
         assertTrue(userDetails.isEnabled());
     }
 
     @Test
-    void testEquals_SameInstance() {
-        // Arrange
-        UserDetailsImpl userDetails = UserDetailsImpl.builder().id(1L).build();
-
-        // Act + Assert
-        assertTrue(userDetails.equals(userDetails));
+    @Tag("UserDetailsImpl.equals()")
+    void testEqualsSameUser() {
+        UserDetailsImpl sameUser = UserDetailsImpl.builder()
+                .id(1L)
+                .username("testuser")
+                .firstName("John")
+                .lastName("Doe")
+                .admin(false)
+                .password("testPassword")
+                .build();
+        assertTrue(userDetails.equals(sameUser));
     }
 
     @Test
-    void testEquals_Null() {
-        // Arrange
-        UserDetailsImpl userDetails = UserDetailsImpl.builder().id(1L).build();
+    @Tag("UserDetailsImpl.equals()")
+    void testEqualsDifferentUser() {
+        UserDetailsImpl differentUser = UserDetailsImpl.builder()
+                .id(2L)
+                .username("anotheruser")
+                .firstName("Jane")
+                .lastName("Doe")
+                .admin(true)
+                .password("differentPassword")
+                .build();
+        assertFalse(userDetails.equals(differentUser));
+    }
 
-        // Act + Assert
+
+    @Test
+    @Tag("UserDetailsImpl.equals()")
+    void testEqualsNonUserDetailsObject() {
+        Object nonUserDetailsObject = new Object();
+        assertFalse(userDetails.equals(nonUserDetailsObject));
+    }
+
+
+    @Test
+    @Tag("UserDetailsImpl.equals()")
+    void testEqualsWithNull() {
         assertFalse(userDetails.equals(null));
     }
 
-    @Test
-    void testEquals_DifferentClass() {
-        // Arrange
-        UserDetailsImpl userDetails = UserDetailsImpl.builder().id(1L).build();
-
-        // Act + Assert
-        assertFalse(userDetails.equals("Not a UserDetailsImpl object"));
-    }
 
     @Test
-    void testEquals_DifferentId() {
-        // Arrange
-        UserDetailsImpl userDetails1 = UserDetailsImpl.builder().id(1L).build();
-        UserDetailsImpl userDetails2 = UserDetailsImpl.builder().id(2L).build();
+    @Tag("UserDetailsImpl.hashCode()")
+    void testHashCode() {
+        UserDetailsImpl differentUserDetails = UserDetailsImpl.builder()
+                .id(1L)
+                .username("testuser")
+                .firstName("John")
+                .lastName("Doe")
+                .admin(false)
+                .password("testPassword")
+                .build();
 
-        // Act + Assert
-        assertFalse(userDetails1.equals(userDetails2));
+        assertNotEquals(userDetails.hashCode(), differentUserDetails.hashCode());
     }
 
-    @Test
-    void testEquals_SameId() {
-        // Arrange
-        UserDetailsImpl userDetails1 = UserDetailsImpl.builder().id(1L).build();
-        UserDetailsImpl userDetails2 = UserDetailsImpl.builder().id(1L).build();
-
-        // Act + Assert
-        assertTrue(userDetails1.equals(userDetails2));
-    }
 }
+

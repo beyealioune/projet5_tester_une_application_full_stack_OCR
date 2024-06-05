@@ -1,35 +1,35 @@
 package com.openclassrooms.starterjwt.AuthControllerTest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.starterjwt.controllers.AuthController;
-import com.openclassrooms.starterjwt.models.User;
-import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import com.openclassrooms.starterjwt.payload.request.SignupRequest;
-import com.openclassrooms.starterjwt.payload.response.JwtResponse;
 import com.openclassrooms.starterjwt.payload.response.MessageResponse;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
-import com.openclassrooms.starterjwt.security.jwt.services.UserDetailsImpl;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Optional;
-
-import static net.bytebuddy.matcher.ElementMatchers.any;
+import org.springframework.test.web.servlet.MockMvc;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+
+
 public class AuthControllerTest {
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -82,9 +82,5 @@ public class AuthControllerTest {
         // Vérification que le repository a été appelé avec les bonnes valeurs
         verify(userRepository, times(1)).existsByEmail("test@example.com");
     }
-
-
-
-
 
 }
