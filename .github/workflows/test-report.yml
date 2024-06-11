@@ -1,0 +1,43 @@
+name: Test and Report
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14, 16]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Jest tests
+      run: npm run test:jest -- --coverage
+      continue-on-error: true
+
+    - name: Run Cypress tests
+      run: npm run test:cypress
+      continue-on-error: true
+
+    - name: Upload Jest test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: jest-results
+        path: coverage/jest
+
+    - name: Upload Cypress test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: cypress-results
+        path: cypress/reports
