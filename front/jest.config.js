@@ -6,7 +6,7 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   bail: false,
   verbose: false,
-  collectCoverage: false,
+  collectCoverage: true, // Change to true to ensure coverage is collected
   coverageDirectory: './coverage/jest',
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   coveragePathIgnorePatterns: ['<rootDir>/node_modules/'],
@@ -27,7 +27,7 @@ module.exports = {
   reporters: [
     "default",
     ["jest-html-reporters", {
-      "publicPath": "./reports",
+      "publicPath": "./reports/jest", // Ensure Jest reports are stored in a subfolder
       "filename": "report.html",
       "expand": true
     }]
