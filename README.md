@@ -40,6 +40,8 @@ Login : yoga@studio.com
 Mot de passe : test!1234
 
 ## Tests
+Vous pouvez lancer les tests E2E avec cette commande : 
+' npx cypress run'
 
 Tests End-to-End (E2E)
 Pour lancer les tests e2e :
