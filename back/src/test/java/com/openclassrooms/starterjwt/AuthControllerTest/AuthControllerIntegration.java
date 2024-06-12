@@ -59,7 +59,7 @@ public class AuthControllerIntegration {
     @Tag("api/auth/register api/auth/login")
     public void testRegisterAndLoginWithValidCredentials() throws Exception {
         // * Arrange
-        String email = "test6@test.com";
+        String email = "test7@test.com";
         String password = "test!1234";
 
         SignupRequest signUpRequest = new SignupRequest();

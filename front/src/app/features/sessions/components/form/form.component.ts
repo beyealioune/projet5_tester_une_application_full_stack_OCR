@@ -17,7 +17,7 @@ export class FormComponent implements OnInit {
   public onUpdate: boolean = false;
   public sessionForm: FormGroup | undefined;
   public teachers$ = this.teacherService.all();
-  private id: string | undefined;
+  public id: string | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,7 +60,7 @@ export class FormComponent implements OnInit {
     }
   }
 
-  private initForm(session?: Session): void {
+  public initForm(session?: Session): void {
     this.sessionForm = this.fb.group({
       name: [
         session ? session.name : '',
@@ -84,7 +84,7 @@ export class FormComponent implements OnInit {
     });
   }
 
-  private exitPage(message: string): void {
+  public exitPage(message: string): void {
     this.matSnackBar.open(message, 'Close', { duration: 3000 });
     this.router.navigate(['sessions']);
   }
