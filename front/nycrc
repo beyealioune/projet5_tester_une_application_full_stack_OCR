@@ -8,6 +8,8 @@
     "**/*.spec.ts",
     "./src/main.ts",
     "./src/test.ts",
-    "**/*.conf.js"
+    "**/*.conf.js",
+    "!cypress/e2e/**" ,
+    "./src/app/services"
   ]
 }
