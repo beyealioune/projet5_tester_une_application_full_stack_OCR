@@ -16,7 +16,7 @@ public class UserMapperTest {
     private EntityMapper<UserDto, User> userMapper;
 
     @Test
-    public void testToEntity() {
+    public void testToEntityTest() {
         // Given
         UserDto userDTO = new UserDto();
         userDTO.setId(1L);
@@ -39,7 +39,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void testToDto() {
+    public void testToDtoTest() {
         // Given
         User user = new User(1L, "test@example.com", "Doe", "John", "password", true, null, null);
 

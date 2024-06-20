@@ -17,8 +17,8 @@ public class UserMapperTest {
     private UserMapper userMapper;
 
     @Test
-    void testToEntity() {
-        // Créer un objet DTO avec tous les champs nécessaires, y compris le mot de passe
+    void toEntityTest() {
+        // given
         UserDto userDto = new UserDto();
         userDto.setEmail("test@example.com");
         userDto.setLastName("Doe");
@@ -26,10 +26,10 @@ public class UserMapperTest {
         userDto.setAdmin(true);
         userDto.setPassword("password123"); // Définir un mot de passe non null
 
-        // Mapper le DTO vers une entité
+        // when
         User user = userMapper.toEntity(userDto);
 
-        // Assertions sur l'entité résultante
+        // then
         assertNotNull(user);
         assertEquals(userDto.getEmail(), user.getEmail());
         assertEquals(userDto.getLastName(), user.getLastName());
@@ -40,7 +40,7 @@ public class UserMapperTest {
 
 
     @Test
-    public void testToDto() {
+    public void toDtoTest() {
         // Given
         User user = new User(1L, "john.doe@example.com", "Doe", "John", "password", true, null, null);
 

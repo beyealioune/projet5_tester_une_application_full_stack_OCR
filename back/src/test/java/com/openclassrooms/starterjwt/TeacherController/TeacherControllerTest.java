@@ -59,35 +59,33 @@ import com.openclassrooms.starterjwt.services.TeacherService;
 
         @Test
         void testFindById() {
-            // Mocking data
+            // given
             long teacherId = 1L;
             Teacher mockTeacher = new Teacher();
             mockTeacher.setId(teacherId);
 
-            // Mocking service method
+
             TeacherService teacherService = mock(TeacherService.class);
             when(teacherService.findById(teacherId)).thenReturn(mockTeacher);
 
-            // Mocking mapper method
             TeacherMapper teacherMapper = mock(TeacherMapper.class);
             TeacherDto mockTeacherDto = new TeacherDto(); // Create a TeacherDto object
             when(teacherMapper.toDto(mockTeacher)).thenReturn(mockTeacherDto); // Return the TeacherDto object
 
-            // Create the controller with mocked dependencies
             TeacherController teacherController = new TeacherController(teacherService, teacherMapper);
 
-            // Call the controller method
+            //when
             ResponseEntity<?> responseEntity = teacherController.findById(String.valueOf(teacherId));
 
-            // Verify the response
+            // then
             assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
             assertEquals(mockTeacherDto, responseEntity.getBody());
         }
 
         @Test
         @Tag("get_api/teacher")
-        public void getAllTeachersShouldReturnAllTheTeachers() {
-            // * Arrange
+        public void getAllTeachersShouldReturnAllTheTeachersTest() {
+            // given
 
             Teacher mockTeacher1 = new Teacher();
             mockTeacher1.setId(1L);
@@ -109,7 +107,7 @@ import com.openclassrooms.starterjwt.services.TeacherService;
 
             when(teacherService.findAll()).thenReturn(mockTeachers);
 
-            // Create an array to hold TeacherDto objects
+
             List<TeacherDto> expectedTeacherDtos = new ArrayList<>();
 
             // Iterate over the teachers and create corresponding TeacherDto objects
@@ -127,12 +125,12 @@ import com.openclassrooms.starterjwt.services.TeacherService;
             }
 
             when(teacherMapper.toDto(mockTeachers)).thenReturn(expectedTeacherDtos); // You can create a mock TeacherDto as
-            // needed
 
-            // * Act
+
+            //when
             ResponseEntity<?> result = teacherController.findAll();
 
-            // * Assert
+            //then
             assertEquals(HttpStatus.OK, result.getStatusCode());
 
             Boolean hasSameArrayLength = ((List<Teacher>) result.getBody()).size() == mockTeachers.size();
@@ -142,8 +140,8 @@ import com.openclassrooms.starterjwt.services.TeacherService;
 
         @Test
         @Tag("get_api/teacher/{id}")
-        public void getTeacherWithValidIdShouldReturnTheTeacher() {
-            // * Arrange
+        public void getTeacherWithValidIdShouldReturnTheTeacherTest() {
+            // given
             Long teacherId = 1L;
             Teacher mockTeacher = new Teacher();
             mockTeacher.setId(teacherId);
@@ -158,18 +156,18 @@ import com.openclassrooms.starterjwt.services.TeacherService;
             when(teacherService.findById(teacherId)).thenReturn(mockTeacher);
             when(teacherMapper.toDto(mockTeacher)).thenReturn(mockTeacherDto);
 
-            // * Act
+            //when
             ResponseEntity<?> result = teacherController.findById(teacherId.toString());
 
-            // * Assert
+            //then
             assertEquals(HttpStatus.OK, result.getStatusCode());
         }
 
 
         @Test
         @Tag("get_api/teacher/{id}")
-        public void getTeacherWithNonExistentIdShouldReturnANotFoundError() {
-            // * Arrange
+        public void getTeacherWithNonExistentIdShouldReturnANotFoundErrorTest() {
+            // given
             Long teacherId = 0L;
             Teacher mockTeacher = new Teacher();
             mockTeacher.setId(teacherId);
@@ -178,20 +176,19 @@ import com.openclassrooms.starterjwt.services.TeacherService;
 
             when(teacherService.findById(teacherId)).thenReturn(null);
 
-            // * Act
+            // when
             ResponseEntity<?> result = teacherController.findById(teacherId.toString());
 
-            // * Assert
+            // then
             assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
         }
 
         @Test
         @Tag("get_api/teacher/{id}")
-        public void getTeacherWithInvalidIdShouldReturnABadRequestError() {
-            // * Act
+        public void getTeacherWithInvalidIdShouldReturnABadRequestErrorTest() {
+
             ResponseEntity<?> result = teacherController.findById("invalid");
 
-            // * Assert
             assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         }
 

@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TeacherServiceTest {
 
     @Test
-    void testFindAll() {
-        // Arrange
+    void findAllTest() {
+        // given
         List<Teacher> teachers = new ArrayList<>();
         teachers.add(new Teacher());
         teachers.add(new Teacher());
@@ -30,17 +30,17 @@ public class TeacherServiceTest {
 
         TeacherService teacherService = new TeacherService(teacherRepository);
 
-        // Act
+        // when
         List<Teacher> result = teacherService.findAll();
 
-        // Assert
+        // then
         assertEquals(2, result.size());
         verify(teacherRepository, times(1)).findAll();
     }
 
     @Test
-    void testFindById() {
-        // Arrange
+    void findByIdTest() {
+        // given
         Teacher teacher = new Teacher();
         teacher.setId(1L);
 
@@ -49,18 +49,18 @@ public class TeacherServiceTest {
 
         TeacherService teacherService = new TeacherService(teacherRepository);
 
-        // Act
+        // when
         Teacher result = teacherService.findById(1L);
 
-        // Assert
+        // then
         assertNotNull(result);
         assertEquals(1L, result.getId());
         verify(teacherRepository, times(1)).findById(1L);
     }
 
     @Test
-    void testFindAllWithEmptyList() {
-        // Arrange
+    void findAllWithEmptyListTest() {
+        // given
         List<Teacher> teachers = new ArrayList<>();
 
         TeacherRepository teacherRepository = mock(TeacherRepository.class);
@@ -68,26 +68,26 @@ public class TeacherServiceTest {
 
         TeacherService teacherService = new TeacherService(teacherRepository);
 
-        // Act
+        // when
         List<Teacher> result = teacherService.findAll();
 
-        // Assert
+        // test
         assertEquals(0, result.size());
         verify(teacherRepository, times(1)).findAll();
     }
 
     @Test
-    void testFindByIdNotFound() {
-        // Arrange
+    void findByIdNotFoundTest() {
+        // given
         TeacherRepository teacherRepository = mock(TeacherRepository.class);
         when(teacherRepository.findById(1L)).thenReturn(Optional.empty());
 
         TeacherService teacherService = new TeacherService(teacherRepository);
 
-        // Act
+        // when
         Teacher result = teacherService.findById(1L);
 
-        // Assert
+        // then
         assertNull(result);
         verify(teacherRepository, times(1)).findById(1L);
     }

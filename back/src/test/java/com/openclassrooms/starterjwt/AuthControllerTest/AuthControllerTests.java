@@ -62,13 +62,13 @@ class AuthControllerTests {
     }
 
     @BeforeAll
-    static public void initStartingTime() {
+    static public void initStarting() {
         logger.info("Before all the test suites");
         startedAt = Instant.now();
     }
 
     @AfterAll
-    static public void showTestDuration() {
+    static public void showHowManyTimesTest() {
         logger.info("After all the test suites");
         Instant endedAt = Instant.now();
         long duration = Duration.between(startedAt, endedAt).toMillis();
@@ -77,64 +77,64 @@ class AuthControllerTests {
 
     @Test
     @Tag("post_api/auth/login")
-    void authenticateValidUser_shouldReturnJwtResponse() throws Exception {
-        // Arrange
+    void authenticateValidUserWithJwtTest() throws Exception {
+        //GIVEN
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("yoga@studio.com");
         loginRequest.setPassword("test!1234");
-        // Act
+        //WHEN
         ResultActions result = mockMvc.perform(post("/api/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest)));
-        // Assert
+        //THEN
         result.andExpect(status().isOk());
     }
 
     @Test
     @Tag("post_api/auth/login")
-    void authenticateInvalidUser_shouldReturnError() throws Exception {
-        // Arrange
+    void authenticateInvalidUserErrorTest() throws Exception {
+        //GIVEN
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("yoga@studio.com");
         loginRequest.setPassword("test!1234");
-        // Act
+        //WHEN
         ResultActions result = mockMvc.perform(post("/api/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest)));
-        // Assert
+        //THEN
         result.andExpect(status().isOk());
     }
     @Test
     @Tag("post_api/auth/register")
-    void registerValidUser_shouldReturnMessageResponse() throws Exception {
-        // Arrange
+    void registerValidUserMessageResponseTest() throws Exception {
+        //GIVEN
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setEmail("test6@example.com");
         signupRequest.setLastName("Doe");
         signupRequest.setFirstName("John");
         signupRequest.setPassword("password");
-        // Act
+        //WHEN
         ResultActions result = mockMvc.perform(post("/api/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(signupRequest)));
-        // Assert
+        //THEN
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("User registered successfully!"));
     }
     @Test
     @Tag("post_api/auth/register")
-    void registerInvalidUser_shouldReturnErrorResponse() throws Exception {
-        // Arrange
+    void registerInvalidUserErrorResponseTest() throws Exception {
+        //GIVEN
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setFirstName("Toto");
         signupRequest.setLastName("Toto");
         signupRequest.setEmail("yoga@studio.com");
         signupRequest.setPassword("test!1234");
-        // Act
+        //WHEN
         ResultActions result = mockMvc.perform(post("/api/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(signupRequest)));
-        // Assert
+        //THEN
         result.andExpect(status().isBadRequest());
     }
 

@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
         private AuthEntryPointJwt authEntryPointJwt;
 
         @Test
-        void testCommenceUnit() throws ServletException, IOException {
+        void commenceUnitTest() throws ServletException, IOException {
             MockHttpServletRequest request = new MockHttpServletRequest();
             MockHttpServletResponse response = new MockHttpServletResponse();
             AuthenticationException authException = new AuthenticationException("Unauthorized") {};
@@ -47,7 +47,7 @@ import static org.mockito.Mockito.*;
 
         @Test
         @DisplayName("Test commence method")
-        void testCommence() throws IOException, ServletException {
+        void commenceTest() throws IOException, ServletException {
             // Mocking request
             HttpServletRequest request = mock(HttpServletRequest.class);
             when(request.getServletPath()).thenReturn("/api/test");

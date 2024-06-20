@@ -58,8 +58,8 @@ public class SessionControllerIntegration {
     @Test
     @Tag("post_api/session/--get_api/session/{id}")
     @WithMockUser(username = "yoga@studio.com", roles = "ADMIN")
-    public void testSessionCreationAndRetrieval() throws Exception {
-        // * Arrange
+    public void createSessionCredentialTest() throws Exception {
+
         SessionDto sessionDto = createMockedSessionDto();
 
         Session mockSession = createMockedSession(sessionDto);
@@ -68,8 +68,7 @@ public class SessionControllerIntegration {
 
         when(sessionService.getById(69L)).thenReturn(mockSession);
 
-        // * Act
-        // * Assert
+        //
         mockMvc.perform(post("/api/session")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(sessionDto)))

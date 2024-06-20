@@ -41,8 +41,8 @@ public class UserDetailsServiceImplTest {
 
     @Test
     @Tag("UserDetailsServiceImpl.LoadUserByUsername")
-    void testLoadUserByUsernameValidUsername() {
-        // * Arrange
+    void loadUserByUsernameValidUsernameTest() {
+        // given
         User user = new User();
         user.setId(1L);
         user.setEmail("testuser@test.com");
@@ -52,10 +52,10 @@ public class UserDetailsServiceImplTest {
 
         when(userRepository.findByEmail("testuser@test.com")).thenReturn(Optional.of(user));
 
-        // * Act
+        // when
         UserDetails userDetails = userDetailsService.loadUserByUsername("testuser@test.com");
 
-        // * Assert
+        // then
         assertNotNull(userDetails);
         assertEquals("testuser@test.com", userDetails.getUsername());
         assertEquals("John", ((UserDetailsImpl) userDetails).getFirstName());
@@ -66,7 +66,7 @@ public class UserDetailsServiceImplTest {
 
     @Test
     @Tag("UserDetailsServiceImpl.LoadUserByUsername")
-    void testLoadUserByUsernameInvalidUsername() {
+    void loadUserByUsernameInvalidUsernameTest() {
         // * Arrange
         when(userRepository.findByEmail("nonexistentuser@test.com")).thenReturn(Optional.empty());
 

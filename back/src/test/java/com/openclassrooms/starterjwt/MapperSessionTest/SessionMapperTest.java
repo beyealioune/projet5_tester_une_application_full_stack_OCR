@@ -37,34 +37,33 @@ public class SessionMapperTest {
 
     @Test
     public void testToEntity() {
-        // Créer un objet SessionDto
+        //GIVEN
         SessionDto sessionDto = new SessionDto();
         sessionDto.setDescription("Test description");
         sessionDto.setTeacher_id(1L);
         sessionDto.setUsers(List.of(1L, 2L, 3L));
 
-        // Mock des méthodes findById de TeacherService et UserService
         when(teacherService.findById(1L)).thenReturn(new Teacher());
         when(userService.findById(1L)).thenReturn(new User());
         when(userService.findById(2L)).thenReturn(new User());
         when(userService.findById(3L)).thenReturn(new User());
-
+        //WHEN
         Session session = sessionMapper.toEntity(sessionDto);
-
+        //THEN
         assertEquals("Test description", session.getDescription());
-        // Assurez-vous que les utilisateurs sont correctement mappés
         assertEquals(3, session.getUsers().size());
     }
 
     @Test
     public void testToDto() {
+        //GIVEN
         Session session = new Session();
         session.setDescription("Test description");
         session.setTeacher(new Teacher());
         session.setUsers(List.of(new User(), new User(), new User()));
-
+        //WHEN
         SessionDto sessionDto = sessionMapper.toDto(session);
-
+        //THEN
         assertEquals("Test description", sessionDto.getDescription());
         assertEquals(3, sessionDto.getUsers().size());
     }

@@ -38,7 +38,7 @@ public class AuthTokenFilterTest {
 
     @Test
     @Tag("AuthTokenFilter.doFilterInternal()")
-    void doFilterInternalValidTokenShouldSetAuthentication() throws ServletException, IOException {
+    void doFilterInternalValidTokenShouldSetAuthenticationTest() throws ServletException, IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         FilterChain filterChain = mock(FilterChain.class);
@@ -51,7 +51,7 @@ public class AuthTokenFilterTest {
 
     @Test
     @Tag("AuthTokenFilter.doFilterInternal()")
-    void doFilterInternalInvalidTokenShouldNotSetAuthentication() throws ServletException, IOException {
+    void doFilterInternalInvalidTokenShouldNotSetAuthenticationTest() throws ServletException, IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         FilterChain filterChain = mock(FilterChain.class);
@@ -65,7 +65,7 @@ public class AuthTokenFilterTest {
 
     @Test
     @Tag("AuthTokenFilter.parseJwt()")
-    void parseJwtValidHeaderShouldReturnToken() {
+    void parseJwtValidHeaderShouldReturnTokenTest() {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader("Authorization", "Bearer testToken");
 
@@ -77,7 +77,7 @@ public class AuthTokenFilterTest {
 
     @Test
     @Tag("AuthTokenFilter.parseJwt()")
-    void parseJwt_invalidHeader_shouldReturnNull() {
+    void parseJwt_invalidHeader_shouldReturnNullTest() {
         MockHttpServletRequest request = new MockHttpServletRequest();
 
         String result = authTokenFilter.parseJwt(request);

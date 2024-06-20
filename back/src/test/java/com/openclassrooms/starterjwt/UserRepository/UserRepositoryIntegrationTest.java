@@ -24,8 +24,8 @@ class UserRepositoryIntegrationTest {
 
 
     @Test
-    void testExistsByEmail() {
-        // Créez un utilisateur et enregistrez-le dans la base de données
+    void existsByEmailTest() {
+        // given
         User user = new User();
         user.setEmail("test@example.com");
         user.setPassword("password");
@@ -34,10 +34,10 @@ class UserRepositoryIntegrationTest {
         user.setAdmin(false);
         userRepository.save(user);
 
-        // Vérifiez si l'utilisateur existe par e-mail
+        // when
         boolean existsByEmail = userRepository.existsByEmail("test@example.com");
 
-        // Vérifiez que l'utilisateur existe
+        // then
         assertTrue(existsByEmail);
     }
 }

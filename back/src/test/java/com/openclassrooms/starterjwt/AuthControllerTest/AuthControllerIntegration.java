@@ -26,7 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-// @AutoConfigureTestDatabase
 public class AuthControllerIntegration {
 
 
@@ -57,8 +56,7 @@ public class AuthControllerIntegration {
 
     @Test
     @Tag("api/auth/register api/auth/login")
-    public void testRegisterAndLoginWithValidCredentials() throws Exception {
-        // * Arrange
+    public void registerAndLoginCredentialValidTest() throws Exception {
         String email = "test7@test.com";
         String password = "test!1234";
 

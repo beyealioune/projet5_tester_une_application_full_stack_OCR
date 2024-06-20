@@ -52,34 +52,33 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testRegisterUser_Success() {
-        // Création d'un utilisateur de test
+    public void registerUserWithSuccess() {
+        //GIVEN
         SignupRequest signUpRequest = new SignupRequest();
         signUpRequest.setEmail("test@example.com");
         signUpRequest.setFirstName("John");
         signUpRequest.setLastName("Doe");
-        signUpRequest.setPassword("Test1234"); // Mot de passe valide
+        signUpRequest.setPassword("Test1234");
 
-        // Mock du PasswordEncoder et du UserRepository
+
         PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
         when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
 
         UserRepository userRepository = mock(UserRepository.class);
         when(userRepository.existsByEmail(anyString())).thenReturn(false);
 
-        // Création du contrôleur avec les dépendances simulées
+
         AuthController authController = new AuthController(mock(AuthenticationManager.class), passwordEncoder, mock(JwtUtils.class), userRepository);
 
-        // Appel de la méthode à tester
+        //WHEN
         ResponseEntity<?> response = authController.registerUser(signUpRequest);
 
-        // Vérification de la réponse
+        //THEN
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
         assertTrue(response.getBody() instanceof MessageResponse);
         assertEquals("User registered successfully!", ((MessageResponse) response.getBody()).getMessage());
 
-        // Vérification que le repository a été appelé avec les bonnes valeurs
         verify(userRepository, times(1)).existsByEmail("test@example.com");
     }
 

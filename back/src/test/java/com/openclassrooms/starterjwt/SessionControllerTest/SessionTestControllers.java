@@ -70,13 +70,13 @@ public class SessionTestControllers {
     static private Instant startedAt;
 
     @BeforeAll
-    static public void initStartingTime() {
+    static public void initStarting() {
         logger.info("Before all the test suites");
         startedAt = Instant.now();
     }
 
     @AfterAll
-    static public void showTestDuration() {
+    static public void howManyTimeTest() {
         logger.info("After all the test suites");
         Instant endedAt = Instant.now();
         long duration = Duration.between(startedAt, endedAt).toMillis();
@@ -91,7 +91,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("get_api/session/{id}")
-    public void getSessionById_returnsSessionWithGivenId() {
+    public void getSessionByIdSessionWithGivenIdTest() {
         try {
 
             ResultActions result = mockMvc.perform(
@@ -106,7 +106,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("get_api/session/{id}")
-    public void getSessionById_withInvalidId_returnsBadRequest() {
+    public void getSessionByIdWithInvalidIdBadRequestTest() {
         try {
 
             ResultActions result = mockMvc.perform(
@@ -120,7 +120,7 @@ public class SessionTestControllers {
     }
     @Test
     @Tag("get_api/session/{id}")
-    public void getSessionById_withNonExistentId_returnsBadRequest() {
+    public void getSessionByIdWithNonExistentIdBadRequestTest() {
         try {
 
             ResultActions result = mockMvc.perform(
@@ -134,7 +134,7 @@ public class SessionTestControllers {
     }
     @Test
     @Tag("get_api/session")
-    public void getAllSessions_returnsListOfAllSessions() {
+    public void getAllSessionsListOfAllSessionsTest() {
         try {
 
             ResultActions result = mockMvc.perform(
@@ -149,7 +149,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("post_api/session")
-    public void createSessionWithValidSessionDto_createsNewSession() {
+    public void createSessionWithValidSessionDtoCreatesNewSessionTest() {
         try {
             LocalDateTime now = LocalDateTime.now();
             String isoString = "2023-12-30T10:27:21";
@@ -208,7 +208,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("post_api/session")
-    public void createSessionWithInvalidSessionDto_createsNewSession() {
+    public void createSessionWithInvalidSessionDtoCreatesNewSessionTest() {
         try {
             SessionDto sessionDto = new SessionDto();
 
@@ -226,7 +226,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("put_api/session/{id}")
-    public void updateSession_withValidId_returnsUpdatedSession() {
+    public void updateSession_withValidIdUpdatedSessionTest() {
         try {
             String isoString = "2023-12-30T10:27:21";
 
@@ -280,7 +280,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("put_api/session/{id}")
-    public void updateSession_withInvalidId_returnsBadRequest() {
+    public void updateSession_withInvalidIdBadRequestTest() {
         try {
 
             ResultActions result = mockMvc.perform(put("/api/session/1")
@@ -299,7 +299,7 @@ public class SessionTestControllers {
     @Test
     @Tag("delete_api/session/{id}")
         @DisplayName("(HAPPY PATH) it should delete the session and return a 200 status code")
-        public void deleteSession_withValidId_returnsBadRequest () {
+        public void deleteSessionWithValidIdBadRequestTest () {
             try {
 
                 ResultActions result = mockMvc.perform(delete("/api/session/1")
@@ -318,7 +318,7 @@ public class SessionTestControllers {
         // Assert
         @Test
         @Tag("delete_api/session/{id}")
-        public void deleteSession_withNonExistantId_returnsBadRequest() {
+        public void deleteSessionWithNonExistantIdBadRequestTest() {
             try {
                 // Arrange
                 // Act
@@ -335,7 +335,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("delete_api/session/{id}")
-    public void deleteSession_withInvalidId_returnsBadRequest() {
+    public void deleteSessionWithInvalidIdBadRequestTest() {
         try {
 
             ResultActions result = mockMvc.perform(delete("/api/session/invalid")
@@ -351,7 +351,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("delete_api/session/{id}/participate/{userId}")
-    public void removeUserFromSessionWithValidIds_shouldRemoveTheUserFromSession() {
+    public void removeUserFromSessionWithValidIdsRemoveTheUserFromSessionTest() {
 
         try {
 
@@ -367,7 +367,7 @@ public class SessionTestControllers {
 
     @Test
     @Tag("delete_api/session/{id}/participate/{userId}")
-    public void removeUserFromSessionWithInvalidIds_shouldRemoveTheUserFromSession() {
+    public void removeUserFromSessionWithInvalidIdsRemoveTheUserFromSessionTest() {
 
             try {
 
